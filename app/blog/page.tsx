@@ -9,7 +9,7 @@ interface Post {
   img: string;
 }
 
-export default async function BlogPage() {
+export default async function Blog() {
   const posts: Post[] = [
     {
       _id: '1',
