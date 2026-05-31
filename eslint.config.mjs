@@ -5,7 +5,6 @@ import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import prettierPlugin from 'eslint-plugin-prettier';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 export default defineConfig([
   // Ignore files
@@ -28,7 +27,6 @@ export default defineConfig([
     plugins: {
       '@typescript-eslint': tsPlugin,
       prettier: prettierPlugin,
-      'simple-import-sort': simpleImportSort,
     },
     rules: {
       // Prettier
@@ -43,10 +41,6 @@ export default defineConfig([
           endOfLine: 'lf',
         },
       ],
-
-      // Import sorting
-      'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
 
       // TypeScript strictness
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],

@@ -1,14 +1,14 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Menu, X } from 'lucide-react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useRef, useState } from 'react';
-
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import gsap from 'gsap';
+import Image from 'next/image';
+import Link from 'next/link';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,6 +16,8 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const iconRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   const navLinks = [
@@ -26,14 +28,26 @@ export function Header() {
     { href: '/contact', label: 'Contact' },
   ];
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  // Desktop scroll animations
   useGSAP(
     () => {
-      // Scroll animation for the header background and height
       gsap.to(headerRef.current, {
         scrollTrigger: {
+          trigger: 'body',
           start: 'top top',
           end: '+=100',
-          scrub: 1, // Smooth scrubbing
+          scrub: 1,
         },
         backgroundColor: 'rgba(10, 10, 10, 0.85)',
         backdropFilter: 'blur(12px)',
@@ -42,9 +56,9 @@ export function Header() {
         ease: 'none',
       });
 
-      // Subtly animate the logo and nav spacing on scroll
       gsap.to(containerRef.current, {
         scrollTrigger: {
+          trigger: 'body',
           start: 'top top',
           end: '+=100',
           scrub: 1,
@@ -57,60 +71,71 @@ export function Header() {
     { scope: headerRef },
   );
 
+  // Mobile menu toggle animation
+  useGSAP(
+    () => {
+      if (isMobileMenuOpen) {
+        gsap.to(mobileMenuRef.current, {
+          x: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power4.out',
+        });
+        gsap.fromTo(
+          '.mobile-nav-item',
+          { x: 30, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.4, stagger: 0.08, delay: 0.1, ease: 'power2.out' },
+        );
+        gsap.fromTo(
+          iconRef.current,
+          { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, duration: 0.2, ease: 'power1.inOut' },
+        );
+      } else {
+        gsap.to(mobileMenuRef.current, {
+          x: '100%',
+          opacity: 0,
+          duration: 0.4,
+          ease: 'power3.inOut',
+        });
+        gsap.fromTo(
+          iconRef.current,
+          { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, duration: 0.2, ease: 'power1.inOut' },
+        );
+      }
+    },
+    { dependencies: [isMobileMenuOpen], scope: headerRef },
+  );
+
   return (
     <header ref={headerRef} className="fixed top-0 z-50 w-full flex items-center h-20">
-      <div ref={containerRef} className="container mx-auto px-4 lg:px-8 h-full flex items-center">
+      <div
+        ref={containerRef}
+        className="container mx-auto px-4 lg:px-8 h-full flex items-center relative z-60"
+      >
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-3 shrink-0">
-          <div className="w-10 h-10 flex items-center justify-center">
-            <svg
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full"
-            >
-              <path d="M20 2L4 11V29L20 38L36 29V11L20 2Z" fill="url(#paint0_linear)" />
-              <path d="M20 2L36 11V29L20 38V2Z" fill="url(#paint1_linear)" />
-              <path
-                d="M12 15L20 20L28 15"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path d="M20 20V30" stroke="white" strokeWidth="3" strokeLinecap="round" />
-              <defs>
-                <linearGradient
-                  id="paint0_linear"
-                  x1="4"
-                  y1="2"
-                  x2="36"
-                  y2="38"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#ef4444" />
-                  <stop offset="1" stopColor="#991b1b" />
-                </linearGradient>
-
-                <linearGradient
-                  id="paint1_linear"
-                  x1="20"
-                  y1="2"
-                  x2="36"
-                  y2="38"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#dc2626" />
-                  <stop offset="1" stopColor="#7f1d1d" />
-                </linearGradient>
-              </defs>
-            </svg>
+        <Link
+          href="/"
+          className="flex items-center shrink-0"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <div className="flex items-center justify-center">
+            <Image
+              src="/logo.png"
+              alt="Zeruqua"
+              width={60}
+              height={60}
+              className="w-full h-full object-contain"
+            />
           </div>
+
           <div className="flex flex-col">
             <span className="font-semibold text-xl leading-none tracking-tight text-white">
-              Eduvance
+              Zeruqua
             </span>
-            <span className="text-sm leading-tight text-gray-400 mt-0.5">Academy</span>
+
+            <span className="text-sm leading-tight text-gray-400 mt-0.5">Labs</span>
           </div>
         </Link>
 
@@ -123,12 +148,12 @@ export function Header() {
                 key={link.label}
                 href={link.href}
                 className={`relative transition-colors duration-300 ${
-                  isActive ? 'text-red-500' : 'text-gray-300 hover:text-gray-400'
+                  isActive ? 'text-red-500' : 'text-white hover:text-white/80'
                 }`}
               >
                 {link.label}
                 <span
-                  className={`absolute -bottom-1 left-0 w-full h-[2px] bg-red-500 transform origin-left transition-transform duration-300 ease-out ${
+                  className={`absolute -bottom-1 left-0 w-full h-0.5 bg-red-500 transform origin-left transition-transform duration-300 ease-out ${
                     isActive ? 'scale-x-100' : 'scale-x-0'
                   }`}
                 />
@@ -142,38 +167,45 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="text-white hover:bg-white/10"
+            className="text-white hover:bg-white/10 hover:text-red-500 transition-all duration-300 relative w-10 h-10 group"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <div ref={iconRef} className="group-hover:rotate-90 transition-transform duration-300">
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </div>
           </Button>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 top-[70px] z-40 bg-[#0a0a0a] border-t border-white/5 lg:hidden">
-          <nav className="flex flex-col p-4 space-y-4 text-base">
+      {/* Mobile Menu Overlay - Right Side Entrance */}
+      <div
+        ref={mobileMenuRef}
+        className="fixed inset-0 z-55 bg-[#0a0a0a] lg:hidden opacity-0 pointer-events-none translate-x-full"
+        style={{ pointerEvents: isMobileMenuOpen ? 'auto' : 'none' }}
+      >
+        <div className="flex flex-col h-full pt-15 overflow-y-auto">
+          <nav className="flex flex-col p-6 space-y-1 text-base text-right" dir="rtl">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className={
-                    isActive
-                      ? 'text-red-500 py-2 border-b border-red-500 font-medium'
-                      : 'text-gray-300 hover:text-gray-400 transition-colors py-2 border-b border-white/5'
-                  }
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
+                <div key={link.label} className="mobile-nav-item">
+                  <Link
+                    href={link.href}
+                    className={`group block py-5 px-3 border-b transition-all duration-300 hover:-translate-x-1 ${
+                      isActive
+                        ? 'text-red-500 font-semibold border-red-500/50'
+                        : 'text-gray-300 hover:text-white border-white/10 hover:border-red-500/30'
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="text-[17px] font-medium tracking-tight">{link.label}</span>
+                  </Link>
+                </div>
               );
             })}
           </nav>
         </div>
-      )}
+      </div>
     </header>
   );
 }
