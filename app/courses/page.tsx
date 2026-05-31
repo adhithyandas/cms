@@ -1,34 +1,49 @@
 import { LayoutTemplate, Database, PenTool, Cloud, ShieldCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-export default function CoursesPage() {
+export default async function CoursesPage() {
   const courses = [
     {
-      icon: <LayoutTemplate className="h-6 w-6 text-red-500" />,
+      _id: "1",
       title: "Full Stack Development",
-      description: "Become a full stack web developer",
+      description: "Become a full stack web developer.",
+      price: 99
     },
     {
-      icon: <Database className="h-6 w-6 text-red-500" />,
+      _id: "2",
       title: "Data Science & AI",
-      description: "Master data and build intelligent systems",
+      description: "Master data and build intelligent systems.",
+      price: 129
     },
     {
-      icon: <PenTool className="h-6 w-6 text-red-500" />,
+      _id: "3",
       title: "UI/UX Design",
-      description: "Design beautiful and user-friendly interfaces",
+      description: "Design beautiful and user-friendly interfaces.",
+      price: 79
     },
     {
-      icon: <Cloud className="h-6 w-6 text-red-500" />,
+      _id: "4",
       title: "Cloud Computing",
-      description: "Learn cloud services and deployment",
+      description: "Learn cloud services and deployment.",
+      price: 109
     },
     {
-      icon: <ShieldCheck className="h-6 w-6 text-red-500" />,
+      _id: "5",
       title: "Cyber Security",
       description: "Protect systems and secure digital assets.",
-    },
+      price: 149
+    }
   ];
+
+  // Helper to map icons. In a real app, this might come from DB or map by title keywords
+  const getIcon = (title: string) => {
+    const titleLower = title.toLowerCase();
+    if (titleLower.includes('data')) return <Database className="h-6 w-6 text-red-500" />;
+    if (titleLower.includes('design')) return <PenTool className="h-6 w-6 text-red-500" />;
+    if (titleLower.includes('cloud')) return <Cloud className="h-6 w-6 text-red-500" />;
+    if (titleLower.includes('security')) return <ShieldCheck className="h-6 w-6 text-red-500" />;
+    return <LayoutTemplate className="h-6 w-6 text-red-500" />;
+  };
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen text-white font-sans selection:bg-red-500/30 w-full overflow-hidden pt-20">
@@ -37,7 +52,7 @@ export default function CoursesPage() {
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center">
           <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1] mb-6">
-            Our <span className="text-red-500">Courses</span>
+            Our <span className="text-red-500">Courses</span> 
           </h1>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto font-normal leading-relaxed">
             Explore our comprehensive curriculum designed to launch your career in tech.
@@ -48,11 +63,11 @@ export default function CoursesPage() {
       <section className="py-10 pb-24 relative z-20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course, index) => (
-              <Card key={index} className="bg-[#111] border border-white/5 shadow-none hover:border-red-500/30 transition-colors h-full flex flex-col p-2">
+            {courses.map((course: any, index: number) => (
+              <Card key={course._id || index} className="bg-[#111] border border-white/5 shadow-none hover:border-red-500/30 transition-colors h-full flex flex-col p-2">
                 <CardHeader className="pb-4 space-y-4">
                   <div className="w-14 h-14 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-                    {course.icon}
+                    {getIcon(course.title)}
                   </div>
                   <CardTitle className="text-xl font-bold text-white">{course.title}</CardTitle>
                 </CardHeader>
@@ -60,6 +75,7 @@ export default function CoursesPage() {
                   <CardDescription className="text-base text-gray-400 leading-relaxed">
                     {course.description}
                   </CardDescription>
+                  {course.price && <p className="mt-4 text-red-400 font-bold">${course.price}</p>}
                 </CardContent>
               </Card>
             ))}
