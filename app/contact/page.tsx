@@ -1,40 +1,39 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    subject: "",
-    message: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    subject: '',
+    message: '',
   });
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState('');
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("Submitting...");
+    setStatus('Submitting...');
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-      setStatus("Message sent successfully!");
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
+      setStatus('Message sent successfully!');
       setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        subject: "",
-        message: "",
+        firstName: '',
+        lastName: '',
+        email: '',
+        subject: '',
+        message: '',
       });
     } catch (err) {
       console.error(err);
-      setStatus("Failed to send message. Please try again.");
+      setStatus('Failed to send message. Please try again.');
     }
   };
 
@@ -48,8 +47,7 @@ export default function ContactPage() {
             Get in <span className="text-red-500">Touch</span>
           </h1>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto font-normal leading-relaxed">
-            Have questions about our programs? We're here to help. Reach out to
-            us.
+            Have questions about our programs? We&apos;re here to help. Reach out to us.
           </p>
         </div>
       </section>
@@ -60,10 +58,7 @@ export default function ContactPage() {
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label
-                    htmlFor="firstName"
-                    className="text-sm font-medium text-gray-300"
-                  >
+                  <label htmlFor="firstName" className="text-sm font-medium text-gray-300">
                     First Name
                   </label>
                   <input
@@ -77,10 +72,7 @@ export default function ContactPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label
-                    htmlFor="lastName"
-                    className="text-sm font-medium text-gray-300"
-                  >
+                  <label htmlFor="lastName" className="text-sm font-medium text-gray-300">
                     Last Name
                   </label>
                   <input
@@ -96,10 +88,7 @@ export default function ContactPage() {
               </div>
 
               <div className="space-y-2">
-                <label
-                  htmlFor="email"
-                  className="text-sm font-medium text-gray-300"
-                >
+                <label htmlFor="email" className="text-sm font-medium text-gray-300">
                   Email Address
                 </label>
                 <input
@@ -114,10 +103,7 @@ export default function ContactPage() {
               </div>
 
               <div className="space-y-2">
-                <label
-                  htmlFor="subject"
-                  className="text-sm font-medium text-gray-300"
-                >
+                <label htmlFor="subject" className="text-sm font-medium text-gray-300">
                   Subject
                 </label>
                 <input
@@ -132,10 +118,7 @@ export default function ContactPage() {
               </div>
 
               <div className="space-y-2">
-                <label
-                  htmlFor="message"
-                  className="text-sm font-medium text-gray-300"
-                >
+                <label htmlFor="message" className="text-sm font-medium text-gray-300">
                   Message
                 </label>
                 <textarea
@@ -151,7 +134,7 @@ export default function ContactPage() {
 
               {status && (
                 <p
-                  className={`text-sm ${status.includes("successfully") ? "text-green-500" : "text-red-500"}`}
+                  className={`text-sm ${status.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}
                 >
                   {status}
                 </p>

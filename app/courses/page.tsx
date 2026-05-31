@@ -1,38 +1,46 @@
-import { LayoutTemplate, Database, PenTool, Cloud, ShieldCheck } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Cloud, Database, LayoutTemplate, PenTool, ShieldCheck } from 'lucide-react';
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+interface Course {
+  _id: string;
+  title: string;
+  description: string;
+  price: number;
+}
 
 export default async function CoursesPage() {
-  const courses = [
+  const courses: Course[] = [
     {
-      _id: "1",
-      title: "Full Stack Development",
-      description: "Become a full stack web developer.",
-      price: 99
+      _id: '1',
+      title: 'Full Stack Development',
+      description: 'Become a full stack web developer.',
+      price: 99,
     },
     {
-      _id: "2",
-      title: "Data Science & AI",
-      description: "Master data and build intelligent systems.",
-      price: 129
+      _id: '2',
+      title: 'Data Science & AI',
+      description: 'Master data and build intelligent systems.',
+      price: 129,
     },
     {
-      _id: "3",
-      title: "UI/UX Design",
-      description: "Design beautiful and user-friendly interfaces.",
-      price: 79
+      _id: '3',
+      title: 'UI/UX Design',
+      description: 'Design beautiful and user-friendly interfaces.',
+      price: 79,
     },
     {
-      _id: "4",
-      title: "Cloud Computing",
-      description: "Learn cloud services and deployment.",
-      price: 109
+      _id: '4',
+      title: 'Cloud Computing',
+      description: 'Learn cloud services and deployment.',
+      price: 109,
     },
     {
-      _id: "5",
-      title: "Cyber Security",
-      description: "Protect systems and secure digital assets.",
-      price: 149
-    }
+      _id: '5',
+      title: 'Cyber Security',
+      description: 'Protect systems and secure digital assets.',
+      price: 149,
+    },
   ];
 
   // Helper to map icons. In a real app, this might come from DB or map by title keywords
@@ -52,7 +60,7 @@ export default async function CoursesPage() {
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center">
           <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1] mb-6">
-            Our <span className="text-red-500">Courses</span> 
+            Our <span className="text-red-500">Courses</span>
           </h1>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto font-normal leading-relaxed">
             Explore our comprehensive curriculum designed to launch your career in tech.
@@ -63,19 +71,29 @@ export default async function CoursesPage() {
       <section className="py-10 pb-24 relative z-20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course: any, index: number) => (
-              <Card key={course._id || index} className="bg-[#111] border border-white/5 shadow-none hover:border-red-500/30 transition-colors h-full flex flex-col p-2">
+            {courses.map((course, index) => (
+              <Card
+                key={course._id || index}
+                className="bg-[#111] border border-white/5 shadow-none hover:border-red-500/30 transition-colors h-full flex flex-col p-2"
+              >
                 <CardHeader className="pb-4 space-y-4">
                   <div className="w-14 h-14 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
                     {getIcon(course.title)}
                   </div>
-                  <CardTitle className="text-xl font-bold text-white">{course.title}</CardTitle>
+                  <div>
+                    <CardTitle className="text-xl font-bold text-white group-hover:text-red-400 transition-colors">
+                      {course.title}
+                    </CardTitle>
+                    <CardDescription className="text-gray-400 mt-2 line-clamp-2">
+                      {course.description}
+                    </CardDescription>
+                  </div>
                 </CardHeader>
-                <CardContent className="flex-grow">
-                  <CardDescription className="text-base text-gray-400 leading-relaxed">
-                    {course.description}
-                  </CardDescription>
-                  {course.price && <p className="mt-4 text-red-400 font-bold">${course.price}</p>}
+                <CardContent className="mt-auto pt-4 flex items-center justify-between border-t border-white/5">
+                  <div className="text-2xl font-bold text-white">${course.price}</div>
+                  <button className="text-sm font-semibold text-red-500 hover:text-red-400 transition-colors">
+                    Enroll Now →
+                  </button>
                 </CardContent>
               </Card>
             ))}

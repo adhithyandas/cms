@@ -1,3 +1,7 @@
 {
-    "snyk.advanced.autoSelectOrganization": true
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "snyk.advanced.autoSelectOrganization": true
 }
