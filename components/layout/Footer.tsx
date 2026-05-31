@@ -1,6 +1,7 @@
-import Link from "next/link";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 // Social Icons as local components since they are missing in lucide-react v1+
 const Facebook = (props: React.SVGProps<SVGSVGElement>) => (
@@ -90,10 +91,7 @@ export function Footer() {
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-full h-full"
                 >
-                  <path
-                    d="M20 2L4 11V29L20 38L36 29V11L20 2Z"
-                    fill="url(#paint0_linear_footer)"
-                  />
+                  <path d="M20 2L4 11V29L20 38L36 29V11L20 2Z" fill="url(#paint0_linear_footer)" />
                   <path d="M20 2L36 11V29L20 38V2Z" fill="url(#paint1_linear_footer)" />
                   <path
                     d="M12 15L20 20L28 15"
@@ -102,12 +100,7 @@ export function Footer() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-                  <path
-                    d="M20 20V30"
-                    stroke="white"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                  />
+                  <path d="M20 20V30" stroke="white" strokeWidth="3" strokeLinecap="round" />
                   <defs>
                     <linearGradient
                       id="paint0_linear_footer"
@@ -145,19 +138,32 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-sm text-gray-400 mb-6 max-w-sm leading-relaxed">
-              Empowering learners with quality education and practical training to achieve great careers.
+              Empowering learners with quality education and practical training to achieve great
+              careers.
             </p>
             <div className="flex items-center space-x-4">
-              <Link href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all">
+              <Link
+                href="#"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all"
+              >
                 <Facebook className="h-4 w-4" />
               </Link>
-              <Link href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all">
+              <Link
+                href="#"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all"
+              >
                 <Twitter className="h-4 w-4" />
               </Link>
-              <Link href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all">
+              <Link
+                href="#"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all"
+              >
                 <Linkedin className="h-4 w-4" />
               </Link>
-              <Link href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all">
+              <Link
+                href="#"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all"
+              >
                 <Instagram className="h-4 w-4" />
               </Link>
             </div>
@@ -167,12 +173,36 @@ export function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-6">Quick Links</h4>
             <ul className="space-y-4 text-sm">
-              <li><Link href="#" className="hover:text-red-400 transition-colors">Home</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">About Us</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">Courses</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">Blog</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">Gallery</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">Contact</Link></li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  Courses
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  Gallery
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -180,11 +210,31 @@ export function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-6">Resources</h4>
             <ul className="space-y-4 text-sm">
-              <li><Link href="#" className="hover:text-red-400 transition-colors">Career Guide</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">Student Reviews</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">FAQ</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">Terms & Conditions</Link></li>
-              <li><Link href="#" className="hover:text-red-400 transition-colors">Privacy Policy</Link></li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  Career Guide
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  Student Reviews
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-red-400 transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -192,12 +242,14 @@ export function Footer() {
           <div className="lg:col-span-1">
             <h4 className="text-white font-semibold mb-6">Newsletter</h4>
             <p className="text-sm mb-6 text-gray-400 leading-relaxed">
-              Subscribe to get updates<br/>on new courses and offers.
+              Subscribe to get updates
+              <br />
+              on new courses and offers.
             </p>
             <div className="flex flex-col space-y-3">
-              <Input 
-                type="email" 
-                placeholder="Enter your email" 
+              <Input
+                type="email"
+                placeholder="Enter your email"
                 className="bg-[#111] border-white/10 text-white placeholder:text-gray-500 h-12 focus-visible:ring-red-500"
               />
               <Button className="w-full bg-red-600 hover:bg-red-700 text-white h-12 text-base font-medium border-0">

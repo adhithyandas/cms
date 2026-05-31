@@ -12,7 +12,12 @@ export const fetchCourses = async () => {
   return res.json();
 };
 
-export const submitContactForm = async (data: { name: string; email: string; subject: string; message: string }) => {
+export const submitContactForm = async (data: {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}) => {
   const res = await fetch(`${API_URL}/messages`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
