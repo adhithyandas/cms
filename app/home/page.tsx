@@ -101,7 +101,7 @@ export default function Home() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="rounded-md px-8 text-base h-12 text-white border-white/20 bg-transparent hover:bg-white/5 cursor-pointer w-full sm:w-auto"
+                    className="rounded-md px-8 text-base h-12 text-white border-white/20 bg-transparent hover:bg-white/5 hover:text-white cursor-pointer w-full sm:w-auto"
                   >
                     Contact Us
                   </Button>
@@ -194,7 +194,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
             <h2 className="text-2xl font-bold text-white">Our Popular Courses</h2>
             <Link
-              href="#"
+              href="/courses"
               className="text-red-500 text-sm font-medium hover:text-red-400 transition-colors flex items-center"
             >
               View All Courses &rarr;
@@ -205,7 +205,7 @@ export default function Home() {
             {courses.map((course, index) => (
               <Card
                 key={index}
-                className="bg-[#111] border border-white/5 shadow-none hover:border-red-500/30 transition-colors h-full flex flex-col"
+                className="bg-[#111] border border-white/5 shadow-none h-full flex flex-col"
               >
                 <CardHeader className="pb-4 space-y-4">
                   <div className="w-12 h-12 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
@@ -235,7 +235,7 @@ export default function Home() {
               <p className="text-gray-400">Discover new technologies, trends, and career advice.</p>
             </div>
             <Link
-              href="#"
+              href="/blog"
               className="text-red-500 text-sm font-medium hover:text-red-400 transition-colors flex items-center"
             >
               View All Posts &rarr;
@@ -267,7 +267,7 @@ export default function Home() {
             ].map((post, i) => (
               <div
                 key={i}
-                className="bg-[#111] rounded-2xl overflow-hidden border border-white/5 hover:border-red-500/30 transition-all hover:-translate-y-1 group flex flex-col"
+                className="bg-[#111] rounded-2xl overflow-hidden border border-white/5 group flex flex-col"
               >
                 <div className="h-52 relative overflow-hidden shrink-0">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10" />
@@ -282,9 +282,7 @@ export default function Home() {
                   <div className="text-red-500 text-xs font-semibold uppercase tracking-wider mb-3">
                     {post.category}
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-red-400 transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
+                  <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">{post.title}</h3>
                   <div className="flex items-center text-gray-500 text-sm mt-auto pt-4">
                     <span>{post.date}</span>
                     <span className="mx-2">•</span>
@@ -331,7 +329,7 @@ export default function Home() {
                 src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=400&q=80"
                 alt="Gallery"
                 fill
-                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
             </div>
 
@@ -341,7 +339,7 @@ export default function Home() {
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80"
                 alt="Gallery"
                 fill
-                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
             </div>
 
@@ -351,7 +349,7 @@ export default function Home() {
                 src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=400&q=80"
                 alt="Gallery"
                 fill
-                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
             </div>
 
@@ -361,7 +359,7 @@ export default function Home() {
                 src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80"
                 alt="Gallery"
                 fill
-                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
             </div>
           </div>
@@ -378,12 +376,14 @@ export default function Home() {
                 Join thousands of learners and build a successful career in tech.
               </p>
             </div>
-            <Button
-              size="lg"
-              className="bg-red-600 hover:bg-red-700 text-white rounded-md px-10 text-base font-semibold h-14 shadow-lg shadow-red-900/20 whitespace-nowrap border-0"
-            >
-              Get Started Now
-            </Button>
+            <Link href="/contact">
+              <Button
+                size="lg"
+                className="bg-red-600 hover:bg-red-700 text-white rounded-md px-10 text-base font-semibold h-14 shadow-lg shadow-red-900/20 whitespace-nowrap border-0 cursor-pointer"
+              >
+                Get Started Now
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
