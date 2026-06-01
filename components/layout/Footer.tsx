@@ -18,12 +18,13 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center shrink-0 mb-6">
-              <div className="w-12 h-12 flex items-center justify-center mr-3">
+              <div className="w-12 h-12 flex items-center justify-center mr-3 shrink-0">
                 <Image
                   src="/logo.png"
                   alt="Logo"
-                  width={80}
-                  height={80}
+                  width={48}
+                  height={48}
+                  priority
                   className="object-contain"
                 />
               </div>
@@ -56,6 +57,7 @@ export function Footer() {
                     alt={social.label}
                     width={20}
                     height={20}
+                    priority
                     className="object-contain"
                   />
                 </Link>

@@ -42,6 +42,28 @@ export function Header() {
   // Desktop scroll animations
   useGSAP(
     () => {
+      const isScrolled = window.scrollY > 0;
+
+      if (isScrolled) {
+        gsap.set(headerRef.current, {
+          backgroundColor: 'rgba(10, 10, 10, 0.85)',
+          backdropFilter: 'blur(12px)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          height: '70px',
+        });
+        gsap.set(containerRef.current, {
+          paddingTop: '0px',
+          paddingBottom: '0px',
+        });
+      } else {
+        gsap.set(headerRef.current, {
+          backgroundColor: 'rgba(10, 10, 10, 0)',
+          backdropFilter: 'blur(0px)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0)',
+          height: '80px',
+        });
+      }
+
       gsap.to(headerRef.current, {
         scrollTrigger: {
           trigger: 'body',
@@ -109,7 +131,14 @@ export function Header() {
   );
 
   return (
-    <header ref={headerRef} className="fixed top-0 z-50 w-full flex items-center h-20">
+    <header
+      ref={headerRef}
+      className={`fixed top-0 z-50 flex h-20 w-full items-center ${
+        pathname === '/' || pathname === '/home'
+          ? 'bg-transparent border-none'
+          : 'border-b border-white/10 bg-[#0a0a0a]/85 backdrop-blur-xl'
+      }`}
+    >
       <div
         ref={containerRef}
         className="container mx-auto px-4 lg:px-8 h-full flex items-center relative z-60"
@@ -120,13 +149,14 @@ export function Header() {
           className="flex items-center shrink-0"
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center w-10 h-10 shrink-0">
             <Image
               src="/logo.png"
               alt="Zeruqua"
-              width={60}
-              height={60}
-              className="w-full h-full object-contain"
+              width={40}
+              height={40}
+              priority
+              className="w-full h-full object-contain me-2"
             />
           </div>
 
