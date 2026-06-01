@@ -11,7 +11,6 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -84,24 +83,29 @@ export default function Home() {
               </h1>
 
               <p className="text-lg text-gray-400 max-w-xl font-normal leading-relaxed">
-                DevSphere Academy provides world-class tech education and hands-on training to help
-                you build a successful career in tech.
+                Zeruqua Labs delivers industry-focused tech education and hands-on learning
+                experiences designed to help aspiring developers thrive in the modern tech
+                world.{' '}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button
-                  size="lg"
-                  className="bg-red-600 hover:bg-red-700 text-white rounded-md px-8 text-base h-12 border-0"
-                >
-                  Explore Courses &rarr;
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="rounded-md px-8 text-base h-12 text-white border-white/20 bg-transparent hover:bg-white/5"
-                >
-                  Contact Us
-                </Button>
+                <Link href="/courses">
+                  <Button
+                    size="lg"
+                    className="bg-red-600 hover:bg-red-700 text-white rounded-md px-8 text-base h-12 border-0 cursor-pointer w-full sm:w-auto"
+                  >
+                    Explore Courses &rarr;
+                  </Button>
+                </Link>
+                <Link href="/contact">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="rounded-md px-8 text-base h-12 text-white border-white/20 bg-transparent hover:bg-white/5 cursor-pointer w-full sm:w-auto"
+                  >
+                    Contact Us
+                  </Button>
+                </Link>
               </div>
             </div>
 
