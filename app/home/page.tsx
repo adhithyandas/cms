@@ -1,20 +1,11 @@
 'use client';
 
-import {
-  Building2,
-  Cloud,
-  Database,
-  LayoutTemplate,
-  PenTool,
-  PercentCircle,
-  ShieldCheck,
-  Users,
-  UsersRound,
-} from 'lucide-react';
+import { Building2, PercentCircle, Users, UsersRound } from 'lucide-react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { fetchCourses, fetchPosts, fetchGallery } from '@/lib/api';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
@@ -46,33 +37,31 @@ export default function Home() {
     },
   ];
 
-  const courses = [
-    {
-      icon: <LayoutTemplate className="h-6 w-6 text-red-500" />,
-      title: 'Full Stack Development',
-      description: 'Become a full stack web developer',
-    },
-    {
-      icon: <Database className="h-6 w-6 text-red-500" />,
-      title: 'Data Science & AI',
-      description: 'Master data and build intelligent systems',
-    },
-    {
-      icon: <PenTool className="h-6 w-6 text-red-500" />,
-      title: 'UI/UX Design',
-      description: 'Design beautiful and user-friendly interfaces',
-    },
-    {
-      icon: <Cloud className="h-6 w-6 text-red-500" />,
-      title: 'Cloud Computing',
-      description: 'Learn cloud services and deployment',
-    },
-    {
-      icon: <ShieldCheck className="h-6 w-6 text-red-500" />,
-      title: 'Cyber Security',
-      description: 'Protect systems and secure digital assets.',
-    },
-  ];
+  const [courses, setCourses] = useState<
+    { _id: string; title: string; description: string; price: number }[]
+  >([]);
+  const [posts, setPosts] = useState<
+    { _id: string; title: string; description?: string; thumbnail: string; createdAt: string }[]
+  >([]);
+  const [gallery, setGallery] = useState<{ _id: string; image: string }[]>([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [courseRes, postRes, galleryRes] = await Promise.all([
+          fetchCourses(),
+          fetchPosts(),
+          fetchGallery(),
+        ]);
+        if (courseRes.data) setCourses(courseRes.data);
+        if (postRes.data) setPosts(postRes.data.slice(0, 3)); // Only take top 3 for home page
+        if (galleryRes.data) setGallery(galleryRes.data.slice(0, 5)); // Only take top 5 for home page
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    loadData();
+  }, []);
 
   const container = useRef<HTMLDivElement>(null);
 
@@ -139,7 +128,7 @@ export default function Home() {
       className="bg-[#0a0a0a] min-h-screen text-white font-sans selection:bg-red-500/30 w-full overflow-hidden"
     >
       {/* Hero Section */}
-      <section className="relative min-h-[110vh] pt-32 pb-24 flex items-center overflow-hidden">
+      <section className="relative pt-32 pb-28 lg:pt-40 flex items-center overflow-visible z-30">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-200 bg-red-600/10 rounded-full blur-[100px] pointer-events-none"></div>
         <div className="absolute right-0 top-20 w-96 h-96 bg-red-600/20 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -244,7 +233,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-8 relative z-20 stats-section">
+      <section className="pb-8 pt-0 relative z-20 stats-section -mt-10 lg:-mt-16">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="bg-[#111] border border-white/5 rounded-2xl p-8 md:p-12">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x-0 md:divide-x divide-white/10">
@@ -281,10 +270,6 @@ export default function Home() {
               <div key={index} className="course-wrapper h-full">
                 <Card className="bg-[#111] border border-white/5 shadow-none h-full flex flex-col group hover:-translate-y-2 hover:border-red-500/30 hover:shadow-[0_8px_30px_rgb(239,68,68,0.15)] transition-all duration-500">
                   <CardHeader className="pb-4 space-y-4">
-                    <div className="w-12 h-12 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 group-hover:border-red-500/40">
-                      {course.icon}
-                    </div>
-
                     <CardTitle className="text-base font-semibold text-white">
                       {course.title}
                     </CardTitle>
@@ -320,35 +305,16 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'How to Master Next.js in 2026',
-                category: 'Web Development',
-                date: 'Oct 24, 2024',
-                readTime: '5 min read',
-                img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80',
-              },
-              {
-                title: 'The Future of AI in Software Engineering',
-                category: 'Artificial Intelligence',
-                date: 'Oct 20, 2024',
-                readTime: '8 min read',
-                img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80',
-              },
-              {
-                title: 'Building Scalable Cloud Architectures',
-                category: 'Cloud Computing',
-                date: 'Oct 15, 2024',
-                readTime: '6 min read',
-                img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80',
-              },
-            ].map((post, i) => (
-              <div key={i} className="blog-wrapper h-full">
+            {posts.map((post, i) => (
+              <div key={post._id || i} className="blog-wrapper h-full">
                 <div className="bg-[#111] h-full rounded-2xl overflow-hidden border border-white/5 group flex flex-col hover:-translate-y-2 transition-transform duration-500 hover:shadow-[0_8px_30px_rgb(239,68,68,0.1)] hover:border-red-500/20 cursor-pointer">
                   <div className="h-52 relative overflow-hidden shrink-0">
                     <div className="absolute inset-0 bg-linear-to-t from-[#111] via-black/40 to-transparent group-hover:via-black/20 transition-colors z-10" />
                     <Image
-                      src={post.img}
+                      src={
+                        post.thumbnail ||
+                        'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80'
+                      }
                       alt={post.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -357,15 +323,17 @@ export default function Home() {
 
                   <div className="p-6 flex flex-col grow">
                     <div className="text-red-500 text-xs font-semibold uppercase tracking-wider mb-3">
-                      {post.category}
+                      General
                     </div>
 
                     <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">{post.title}</h3>
 
                     <div className="flex items-center text-gray-500 text-sm mt-auto pt-4">
-                      <span>{post.date}</span>
-                      <span className="mx-2">•</span>
-                      <span>{post.readTime}</span>
+                      <span>
+                        {post.createdAt
+                          ? new Date(post.createdAt).toLocaleDateString()
+                          : 'Just now'}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -390,60 +358,37 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            <div className="gallery-item col-span-2 row-span-2 rounded-2xl aspect-square md:aspect-auto relative overflow-hidden group">
-              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent z-10" />
-              <Image
-                src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80"
-                alt="Gallery"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
+            {gallery.length > 0 ? (
+              <div className="gallery-item col-span-2 row-span-2 rounded-2xl aspect-square md:aspect-auto relative overflow-hidden group">
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent z-10" />
+                <Image
+                  src={gallery[0].image}
+                  alt="Gallery"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
 
-              <div className="absolute bottom-6 left-6 z-20">
-                <h4 className="text-white font-bold text-2xl mb-1">Annual Hackathon</h4>
-                <p className="text-gray-300 text-sm">24-hour coding challenge</p>
+                <div className="absolute bottom-6 left-6 z-20">
+                  <h4 className="text-white font-bold text-2xl mb-1">Featured Event</h4>
+                  <p className="text-gray-300 text-sm">Zeruqua Labs Highlight</p>
+                </div>
               </div>
-            </div>
+            ) : null}
 
-            <div className="gallery-item rounded-2xl aspect-square relative overflow-hidden group">
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors z-10" />
-              <Image
-                src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=400&q=80"
-                alt="Gallery"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-
-            <div className="gallery-item rounded-2xl aspect-square relative overflow-hidden group">
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors z-10" />
-              <Image
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80"
-                alt="Gallery"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-
-            <div className="gallery-item rounded-2xl aspect-square relative overflow-hidden group">
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors z-10" />
-              <Image
-                src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=400&q=80"
-                alt="Gallery"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-
-            <div className="gallery-item rounded-2xl aspect-square relative overflow-hidden group">
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors z-10" />
-              <Image
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80"
-                alt="Gallery"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-            </div>
+            {gallery.slice(1).map((item, i) => (
+              <div
+                key={item._id || i}
+                className="gallery-item rounded-2xl aspect-square relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors z-10" />
+                <Image
+                  src={item.image}
+                  alt={`Gallery ${i + 2}`}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>

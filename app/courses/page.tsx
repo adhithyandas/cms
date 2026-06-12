@@ -1,5 +1,5 @@
-import { Cloud, Database, LayoutTemplate, PenTool, ShieldCheck } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { fetchCourses } from '@/lib/api';
 
 interface Course {
   _id: string;
@@ -9,47 +9,8 @@ interface Course {
 }
 
 export default async function Courses() {
-  const courses: Course[] = [
-    {
-      _id: '1',
-      title: 'Full Stack Development',
-      description: 'Become a full stack web developer.',
-      price: 99,
-    },
-    {
-      _id: '2',
-      title: 'Data Science & AI',
-      description: 'Master data and build intelligent systems.',
-      price: 129,
-    },
-    {
-      _id: '3',
-      title: 'UI/UX Design',
-      description: 'Design beautiful and user-friendly interfaces.',
-      price: 79,
-    },
-    {
-      _id: '4',
-      title: 'Cloud Computing',
-      description: 'Learn cloud services and deployment.',
-      price: 109,
-    },
-    {
-      _id: '5',
-      title: 'Cyber Security',
-      description: 'Protect systems and secure digital assets.',
-      price: 149,
-    },
-  ];
-
-  const getIcon = (title: string) => {
-    const titleLower = title.toLowerCase();
-    if (titleLower.includes('data')) return <Database className="h-6 w-6 text-red-500" />;
-    if (titleLower.includes('design')) return <PenTool className="h-6 w-6 text-red-500" />;
-    if (titleLower.includes('cloud')) return <Cloud className="h-6 w-6 text-red-500" />;
-    if (titleLower.includes('security')) return <ShieldCheck className="h-6 w-6 text-red-500" />;
-    return <LayoutTemplate className="h-6 w-6 text-red-500" />;
-  };
+  const response = await fetchCourses();
+  const courses: Course[] = response.data || [];
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen text-white font-sans selection:bg-red-500/30 w-full overflow-hidden pt-20">
@@ -77,10 +38,6 @@ export default async function Courses() {
                 className="bg-[#111] border border-white/5 shadow-none h-full flex flex-col p-2"
               >
                 <CardHeader className="pb-4 space-y-4">
-                  <div className="w-14 h-14 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-                    {getIcon(course.title)}
-                  </div>
-
                   <div>
                     <CardTitle className="text-xl font-bold text-white group-hover:text-red-400 transition-colors">
                       {course.title}

@@ -1,14 +1,20 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5001/api';
 
 export const fetchPosts = async () => {
-  const res = await fetch(`${API_URL}/posts`, { cache: 'no-store' });
+  const res = await fetch(`${API_URL}/user/blog`, { cache: 'no-store' });
   if (!res.ok) throw new Error('Failed to fetch posts');
   return res.json();
 };
 
 export const fetchCourses = async () => {
-  const res = await fetch(`${API_URL}/courses`, { cache: 'no-store' });
+  const res = await fetch(`${API_URL}/user/course`, { cache: 'no-store' });
   if (!res.ok) throw new Error('Failed to fetch courses');
+  return res.json();
+};
+
+export const fetchGallery = async () => {
+  const res = await fetch(`${API_URL}/user/gallery`, { cache: 'no-store' });
+  if (!res.ok) throw new Error('Failed to fetch gallery');
   return res.json();
 };
 

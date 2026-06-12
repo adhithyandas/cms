@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.rawpixel.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'zeruqua-cms-assets.s3.ap-south-1.amazonaws.com',
+      },
     ],
   },
 };

@@ -1,38 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { fetchPosts } from '@/lib/api';
 
 interface Post {
   _id: string;
   title: string;
-  category: string;
+  description?: string;
   createdAt: string;
-  img: string;
+  thumbnail: string;
 }
 
 export default async function Blog() {
-  const posts: Post[] = [
-    {
-      _id: '1',
-      title: 'How to Master Next.js in 2026',
-      category: 'Web Development',
-      createdAt: new Date('2024-10-24T00:00:00Z').toISOString(),
-      img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80',
-    },
-    {
-      _id: '2',
-      title: 'The Future of AI in Software Engineering',
-      category: 'Artificial Intelligence',
-      createdAt: new Date('2024-10-20T00:00:00Z').toISOString(),
-      img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80',
-    },
-    {
-      _id: '3',
-      title: 'Building Scalable Cloud Architectures',
-      category: 'Cloud Computing',
-      createdAt: new Date('2024-10-15T00:00:00Z').toISOString(),
-      img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80',
-    },
-  ];
+  const response = await fetchPosts();
+  const posts: Post[] = response.data || [];
+
   return (
     <div className="bg-[#0a0a0a] min-h-screen text-white font-sans selection:bg-red-500/30 w-full overflow-hidden pt-20">
       <section className="relative py-20 overflow-hidden min-h-[30vh] flex items-center">
@@ -64,7 +45,7 @@ export default async function Blog() {
 
                   <Image
                     src={
-                      post.img ||
+                      post.thumbnail ||
                       'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80'
                     }
                     alt={post.title}
@@ -75,7 +56,7 @@ export default async function Blog() {
 
                 <div className="p-6 flex flex-col grow">
                   <div className="text-red-500 text-xs font-semibold uppercase tracking-wider mb-3">
-                    {post.category || 'General'}
+                    General
                   </div>
 
                   <h3 className="text-xl font-bold text-white mb-3 group-hover:text-red-400 transition-colors line-clamp-2">
