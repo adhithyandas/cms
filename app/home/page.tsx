@@ -220,7 +220,7 @@ export default function Home() {
               </div>
 
               <Image
-                src="/hero-image-3.png"
+                src="/hero-image.png"
                 alt="Student holding laptop"
                 width={450}
                 height={550}
