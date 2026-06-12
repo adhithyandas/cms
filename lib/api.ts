@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5001/api';
+const API_URL = 'https://cms-85p5.onrender.com/api';
 
 export const fetchPosts = async () => {
   const res = await fetch(`${API_URL}/user/blog`, { cache: 'no-store' });
